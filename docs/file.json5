@@ -1,0 +1,11 @@
+{
+  name: 'folders1.csv',
+  data: '', // <Buffer >,,
+  size: 91771,
+  encoding: '7bit',
+  tempFilePath: '/Users/andreymitin/librarymusicmatcher/tmp/tmp-1-1644108123581',
+  truncated: false,
+  mimetype: 'text/csv',
+  md5: '13f7bad351d03116ca2f398b20f95a6c',
+  mv: '', // [Function: mv]
+}

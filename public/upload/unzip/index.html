@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="/bootstrap-icons.css">
+    <title>Library Music Matcher</title>
+</head>
+<body>
+<div class="container jumbotron mt-5">
+    <h1>Audio matching</h1>
+    <form action="/upload/unzip" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="zip">
+                Upload a zip file with audio files to determine if they contain samples for which we have fingerprints.
+            </label>
+            <input type="file" class="form-control-file" id="zip" name="zip">
+            <small>max: 500 MB</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>
