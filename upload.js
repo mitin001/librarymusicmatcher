@@ -31,7 +31,7 @@ router.post("/", async (request, response) => {
     fs.writeFileSync(txtFilePath, txt);
 
     await executeCommand(`python3.9 audfprint/audfprint.py precompute ${relPath} -p precompute --shifts 4 2>&1 >> ${txtFilePath}`);
-    await executeCommand(`for p in $(ls pklz/*.pklz); do echo >> ${txtFilePath} && python3.9 audfprint/audfprint.py match --dbase $p precompute/${relPath}.afpt -R 2>&1 >> ${txtFilePath}; done`);
+    executeCommand(`for p in $(ls pklz/*.pklz); do echo >> ${txtFilePath} && python3.9 audfprint/audfprint.py match --dbase $p precompute/${relPath}.afpt -R 2>&1 >> ${txtFilePath}; done`).then().catch();
 
     response.redirect(txtPublicFilePath);
 
