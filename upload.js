@@ -32,7 +32,7 @@ router.post("/", async (request, response) => {
     fs.writeFileSync(txtFilePath, txt);
 
     // -u means urgent: the task is given priority over other queued tasks
-    const {stdin: jobIdLine} = await executeCommand(`ts sh sh/match.sh ${relPath} ${txtFilePath}`);
+    const {stdout: jobIdLine} = await executeCommand(`ts sh sh/match.sh ${relPath} ${txtFilePath}`);
     executeCommand(`ts -u ${jobIdLine}`).then().catch();
 
     response.redirect(txtPublicFilePath);
