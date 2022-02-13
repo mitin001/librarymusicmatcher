@@ -31,8 +31,8 @@ router.post("/", async (request, response) => {
     const txt = `${WARNING}\n\nUpload info: ${uploadInfo}\n\n`;
     fs.writeFileSync(txtFilePath, txt);
 
-    await executeCommand(`python3.9 audfprint/audfprint.py precompute ${relPath} -p precompute --shifts 4 2>&1 >> ${txtFilePath}`);
-    executeCommand(`for p in $(ls pklz/*.pklz); do echo >> ${txtFilePath} && python3.9 audfprint/audfprint.py match --dbase $p precompute/${relPath}.afpt -R 2>&1 >> ${txtFilePath}; done`).then().catch();
+    // -u means urgent: the task is given priority over other queued tasks
+    await executeCommand(`ts -u sh sh/match.sh ${relPath} ${txtFilePath}`);
 
     response.redirect(txtPublicFilePath);
 
@@ -60,7 +60,6 @@ router.post("/archive", async (request, response) => {
     const zipTxtPublicFilePath = `archives/${zipMd5}.txt`;
     const zipTxtFilePath = `public/${zipTxtPublicFilePath}`;
 
-    const commands = [];
     await Promise.all(filenames.map(async name => {
       const {stdout: md5line} = await executeCommand(`md5sum ${JSON.stringify(name)} | awk '{print $1}'`) || {};
       const md5 = md5line.trim();
@@ -77,7 +76,6 @@ router.post("/archive", async (request, response) => {
       zipTxt += `${protocol}://${host}/${txtPublicFilePath}\t${name}\n`;
 
       await executeCommand(`mv ${JSON.stringify(name)} ${relPath}`);
-      await executeCommand(`ts sh sh/precompute.sh ${relPath} ${txtFilePath}`);
       await executeCommand(`ts sh sh/match.sh ${relPath} ${txtFilePath}`);
     }));
 
