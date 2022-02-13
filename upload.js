@@ -77,8 +77,8 @@ router.post("/archive", async (request, response) => {
       zipTxt += `${protocol}://${host}/${txtPublicFilePath}\t${name}\n`;
 
       await executeCommand(`mv ${JSON.stringify(name)} ${relPath}`);
-      await executeCommand(`ts sh precompute.sh ${relPath} ${txtFilePath}`);
-      await executeCommand(`ts sh match.sh ${relPath} ${txtFilePath}`);
+      await executeCommand(`ts sh sh/precompute.sh ${relPath} ${txtFilePath}`);
+      await executeCommand(`ts sh sh/match.sh ${relPath} ${txtFilePath}`);
     }));
 
     fs.writeFileSync(zipTxtFilePath, zipTxt);

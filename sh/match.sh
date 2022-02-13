@@ -1,4 +1,3 @@
-cd ..
 for p in $(ls pklz/*.pklz)
 do
   echo >> "$2"
