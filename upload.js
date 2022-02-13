@@ -77,13 +77,11 @@ router.post("/archive", async (request, response) => {
       zipTxt += `${protocol}://${host}/${txtPublicFilePath}\t${name}\n`;
 
       await executeCommand(`mv ${JSON.stringify(name)} ${relPath}`);
-      commands.push(`python3.9 audfprint/audfprint.py precompute ${relPath} -p precompute --shifts 4 2>&1 >> ${txtFilePath}`);
-      commands.push(`for p in $(ls pklz/*.pklz); do echo >> ${txtFilePath} && python3.9 audfprint/audfprint.py match --dbase $p precompute/${relPath}.afpt -R 2>&1 >> ${txtFilePath}; done`);
+      await executeCommand(`ts sh precompute.sh ${relPath} ${txtFilePath}`);
+      await executeCommand(`ts sh match.sh ${relPath} ${txtFilePath}`);
     }));
 
     fs.writeFileSync(zipTxtFilePath, zipTxt);
-    executeCommand(commands.join(" && ")).then().catch();
-
     response.redirect(`/${zipTxtPublicFilePath}`);
 
   } catch(error) {
